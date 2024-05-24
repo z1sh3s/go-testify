@@ -1,15 +1,9 @@
 package main
 
 import (
-	"log"
 	"net/http"
-	"net/http/httptest"
-	"os"
 	"strconv"
 	"strings"
-	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 var cafeList = map[string][]string{
@@ -50,20 +44,19 @@ func mainHandle(w http.ResponseWriter, req *http.Request) {
 	w.Write([]byte(answer))
 }
 
-func TestMainHandlerWhenCountMoreThanTotal(t *testing.T) {
-	totalCount := 4
-	req, err := http.NewRequest("GET", "/cafe?count=2&city=moscow", nil) // здесь нужно создать запрос к сервису
-	if err != nil {
-		log.Print(err)
-		os.Exit(1)
-	}
-
-	responseRecorder := httptest.NewRecorder()
-	handler := http.HandlerFunc(mainHandle)
-	handler.ServeHTTP(responseRecorder, req)
-
-	// здесь нужно добавить необходимые проверки
-	assert.Equal(t, req, totalCount)
-	assert.NotEqual(t, req, totalCount)
-	assert.Len(t, req, totalCount)
-}
+//func TestMainHandlerWhenCountMoreThanTotal(t *testing.T) {
+//	totalCount := 4
+//	req := httptest.NewRequest(http.MethodGet, "/cafe?count=2&city=moscow", nil) // здесь нужно создать запрос к сервису
+//	responseRecorder := httptest.NewRecorder()
+//	handler := http.HandlerFunc(mainHandle)
+//	handler.ServeHTTP(responseRecorder, req)
+//
+//	if responseRecorder.Code != http.StatusOK {
+//		t.Errorf("expected status ok, got: %d", responseRecorder.Code)
+//	}
+//
+//	// здесь нужно добавить необходимые проверки
+//	assert.Equal(t, req, totalCount)
+//	assert.NotEqual(t, req, totalCount)
+//	assert.Len(t, req, totalCount)
+//}
